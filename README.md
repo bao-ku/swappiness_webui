@@ -1,2 +1,4 @@
 # swappiness_webui
 这是一个专为KernelSU自建内核并且启用了zRam算法的模块，通过控制Swappiness权重调整zRam内存压缩算法的激进程度
+
+当然，只要你编译的内核启用了zRam压缩，理论上都可以使用本模块
