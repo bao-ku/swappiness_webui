@@ -1,6 +1,6 @@
 {
     "version": "v2.0",
     "versionCode": 2,
-    "zipUrl": "https://cdn.jsdelivr.net/gh/bao-ku/swappiness_webui@main/swappiness_webui.zip",
-    "changelog": "https://cdn.jsdelivr.net/gh/bao-ku/swappiness_webui@main/changelog.md"
+    "zipUrl": "https://github.com/bao-ku/swappiness_webui/raw/main/swappiness_webui.zip",
+    "changelog": "https://raw.githubusercontent.com/bao-ku/swappiness_webui/main/changelog.md"
 }
