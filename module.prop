@@ -1,0 +1,7 @@
+id=swappiness_webui
+name=宝子zRam调度模块
+version=v1.0
+versionCode=1
+author=宝子zRam调度模块
+description=通过控制Swappiness权重调整内存压缩算法的激进程度
+webuiIcon=webroot/icon.png
