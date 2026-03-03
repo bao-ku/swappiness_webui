@@ -1,11 +1,17 @@
 #!/system/bin/sh
-MODDIR=${0%/*}
-CONFIG_FILE="$MODDIR/config.conf"
+# 开机后延迟执行 update_desc.sh，确保系统已就绪
+# 此脚本仅更新模块描述，不修改任何系统参数
 
-if [ -f "$CONFIG_FILE" ]; then
-    SAVED_VALUE=$(cat "$CONFIG_FILE")
-    if [[ "$SAVED_VALUE" =~ ^[0-9]+$ ]] && [ "$SAVED_VALUE" -ge 1 ] && [ "$SAVED_VALUE" -le 200 ]; then
-        sysctl -w vm.swappiness=$SAVED_VALUE
-        sh $MODDIR/update_desc.sh
-    fi
-fi
+MODDIR=${0%/*}
+LOG="$MODDIR/service.log"
+
+# 记录启动时间
+echo "$(date): service.sh started" > $LOG
+
+# 延迟 15 秒后执行 update_desc.sh（可根据需要调整）
+(
+    sleep 30
+    echo "$(date): executing update_desc.sh" >> $LOG
+    sh $MODDIR/update_desc.sh >> $LOG 2>&1
+    echo "$(date): update_desc.sh finished" >> $LOG
+) &
