@@ -77,7 +77,3 @@
 如果您在使用过程中遇到任何问题，或有好的建议，欢迎在 Issues 页面提出。
 
 如果您是开发者，也欢迎提交 Pull Request 来改进此模块。
-
-📄 许可证
-
-GNU General Public License v3.0
