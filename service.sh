@@ -10,7 +10,7 @@ echo "$(date): service.sh started" > $LOG
 
 # 延迟 15 秒后执行 update_desc.sh（可根据需要调整）
 (
-    sleep 30
+    sleep 15
     echo "$(date): executing update_desc.sh" >> $LOG
     sh $MODDIR/update_desc.sh >> $LOG 2>&1
     echo "$(date): update_desc.sh finished" >> $LOG
