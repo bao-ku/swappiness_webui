@@ -3,168 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zRam调度模块</title>
+    <title>zRam调度模块 (临时模式)</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #1e1e2f;
+            background-color: #121212;
             color: #e0e0e0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 16px;
+            padding: 12px;
         }
         .container {
-            background-color: #2a2a3a;
-            border-radius: 20px;
-            padding: 30px 25px;
-            max-width: 400px;
+            max-width: 500px;
             width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid #3f3f55;
+        }
+        .card {
+            background-color: #1e1e2a;
+            border-radius: 24px;
+            padding: 24px 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            border: 1px solid #333344;
         }
         h1 {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             margin-top: 0;
-            margin-bottom: 30px;
-            color: #a0a0ff;
+            margin-bottom: 16px;
+            color: #bb86fc;
+            font-weight: 500;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            margin: 0 0 12px 0;
+            color: #bb86fc;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        .section-title .icon {
+            font-size: 1.4rem;
+            margin-right: 8px;
+        }
+        .slider-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #b0b0b0;
+        }
+        .slider-info .current-value {
+            color: #bb86fc;
+            font-weight: 500;
+        }
+        .slider-info .slider-value {
+            color: #ffb86b;
             font-weight: 500;
         }
         .slider-container {
-            margin-bottom: 30px;
-        }
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-        .slider-label span:first-child {
-            color: #b0b0b0;
-        }
-        .slider-label span:last-child {
-            font-weight: bold;
-            color: #ffd966;
-            font-size: 1.3rem;
+            margin-bottom: 20px;
         }
         input[type=range] {
             width: 100%;
             height: 8px;
-            background: linear-gradient(90deg, #4a4a6a, #9f9fff);
-            border-radius: 5px;
+            background: linear-gradient(90deg, #3a3a55, #9a7aff);
+            border-radius: 10px;
             -webkit-appearance: none;
             appearance: none;
             outline: none;
         }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             background: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            border: 2px solid #7a7aff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            border: 2px solid #bb86fc;
             cursor: pointer;
         }
-        .current-value-box {
-            background-color: #1a1a28;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            margin-bottom: 25px;
-            border: 1px dashed #5a5a7a;
-        }
-        .current-value-box div:first-child {
-            font-size: 0.9rem;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        .current-value-box .big-number {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: #b3b3ff;
-            line-height: 1.2;
-        }
-        .button-group {
+        .button-row {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 16px;
         }
         button {
             flex: 1;
-            background-color: #3a3a55;
+            background-color: #333344;
             border: none;
             color: white;
             padding: 14px 10px;
-            border-radius: 30px;
+            border-radius: 40px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
             border: 1px solid transparent;
         }
         button.primary {
-            background-color: #6a5acd;
-            box-shadow: 0 4px 10px rgba(106, 90, 205, 0.3);
+            background-color: #6200ee;
+            box-shadow: 0 4px 12px rgba(98, 0, 238, 0.4);
         }
         button.primary:hover {
-            background-color: #7b6cd9;
+            background-color: #7a2afa;
         }
         button.secondary {
-            background-color: #4a4a6a;
-            border-color: #6a6a8a;
+            background-color: #3a3a55;
         }
         button.secondary:hover {
-            background-color: #5a5a7a;
-        }
-        .hint {
-            margin-top: 25px;
-            font-size: 0.85rem;
-            color: #888;
-            text-align: center;
-            border-top: 1px solid #3f3f55;
-            padding-top: 20px;
+            background-color: #4a4a6a;
         }
         .status-message {
-            margin-top: 15px;
-            padding: 8px;
-            border-radius: 8px;
+            margin: 16px 0 0 0;
+            padding: 12px;
+            border-radius: 12px;
             text-align: center;
-            background-color: #2e2e42;
-            color: #a0e0a0;
-            font-size: 0.9rem;
+            background-color: #2a2a3c;
+            color: #8affb8;
+            font-size: 1rem;
+            font-weight: 500;
+            border-left: 4px solid #8affb8;
+            transition: all 0.3s;
             min-height: 20px;
+        }
+        .status-message.error {
+            color: #ff8a8a;
+            border-left-color: #ff8a8a;
+        }
+        .footer-note {
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: #777;
+            text-align: center;
+        }
+        .flex-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .refresh-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.2rem;
+            padding: 8px;
+            cursor: pointer;
+            flex: 0 0 auto;
+        }
+        .refresh-btn:hover {
+            color: #bb86fc;
+        }
+        .warning-note {
+            font-size: 0.85rem;
+            color: #f0a0a0;
+            margin: 8px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>⚙️ zRam调度模块 </h1>
+        <h1>⚙️ zRam 调度模块 (临时模式)</h1>
 
-        <div class="current-value-box">
-            <div>当前运行值</div>
-            <span class="big-number" id="currentSwappiness">--</span>
-        </div>
-
-        <div class="slider-container">
-            <div class="slider-label">
-                <span>滑动调节 (1-200)</span>
-                <span id="sliderValue">150</span>
+        <!-- Swappiness 卡片 -->
+        <div class="card">
+            <div class="flex-row">
+                <div class="section-title">
+                    <span class="icon">📊</span> Swappiness 调节
+                </div>
+                <button class="refresh-btn" id="refreshSwappinessBtn" title="刷新当前值">↻</button>
             </div>
-            <input type="range" id="swappinessSlider" min="1" max="200" value="150" step="1">
+            <div class="slider-info">
+                <span>系统当前值: <span class="current-value" id="currentSwappinessDisplay">--</span></span>
+                <span>滑块值: <span class="slider-value" id="sliderValueDisplay">150</span></span>
+            </div>
+            <div class="slider-container">
+                <input type="range" id="swappinessSlider" min="1" max="200" value="150" step="1">
+            </div>
+            <div class="button-row">
+                <button class="primary" id="applyTempBtn">⏱️ 临时生效</button>
+            </div>
         </div>
 
-        <div class="button-group">
-            <button class="secondary" id="applyTempBtn">⏱️ 临时生效</button>
-            <button class="primary" id="saveAndApplyBtn">💾 永久生效</button>
+        <!-- zRam 大小卡片 -->
+        <div class="card">
+            <div class="flex-row">
+                <div class="section-title">
+                    <span class="icon">💾</span> zRam 大小调节
+                </div>
+                <button class="refresh-btn" id="refreshZramBtn" title="刷新当前值">↻</button>
+            </div>
+            <div class="slider-info">
+                <span>系统当前值: <span class="current-value" id="currentZramDisplay">--</span></span>
+                <span>滑块值: <span class="slider-value" id="zramSliderValueDisplay">4 GB</span></span>
+            </div>
+            <div class="slider-container">
+                <input type="range" id="zramSizeSlider" min="1" max="16" value="4" step="1">
+            </div>
+            <div class="warning-note">
+                ⚠️ 调整zram大小会临时关闭并重新启用swap，可能导致短暂卡顿
+            </div>
+            <div class="button-row">
+                <button class="primary" id="applyZramTempBtn">⚡ 临时调整</button>
+            </div>
         </div>
 
+        <!-- 全局状态信息 -->
         <div class="status-message" id="statusMsg"></div>
-        <div class="hint">
-            ⚡ 临时生效：临时改变，重启失效。<br>
-    
+
+        <div class="footer-note">
+            ⚡ 所有调整均为临时生效，重启后恢复系统默认值。
+        </div>
+    </div>
+
+    <script type="module">
+        import { exec } from 'https://esm.sh/kernelsu?bundle';
+
+        // Swappiness 元素
+        const slider = document.getElementById('swappinessSlider');
+        const currentSwappinessDisplay = document.getElementById('currentSwappinessDisplay');
+        const sliderValueDisplay = document.getElementById('sliderValueDisplay');
+        const applyTempBtn = document.getElementById('applyTempBtn');
+        const refreshSwappinessBtn = document.getElementById('refreshSwappinessBtn');
+
+        // zRam 元素
+        const currentZramDisplay = document.getElementById('currentZramDisplay');
+        const zramSlider = document.getElementById('zramSizeSlider');
+        const zramSliderValueDisplay = document.getElementById('zramSliderValueDisplay');
+        const applyZramTempBtn = document.getElementById('applyZramTempBtn');
+        const refreshZramBtn = document.getElementById('refreshZramBtn');
+
+        const statusMsg = document.getElementById('statusMsg');
+        const moduleId = 'swappiness_webui';
+
+        // 辅助函数
+        const bytesToGB = (bytes) => (bytes / 1073741824).toFixed(1);
+        const gbToBytes = (gb) => gb * 1073741824;
+
+        function showMessage(msg, isSuccess = true) {
+            statusMsg.textContent = msg;
+            statusMsg.className = 'status-message' + (isSuccess ? '' : ' error');
+            setTimeout(() => {
+                if (statusMsg.textContent === msg) {
+                    statusMsg.textContent = '';
+                    statusMsg.className = 'status-message';
+                }
+            }, 4000);
+        }
+
+        // 仅刷新 swappiness UI，不自动更新描述
+        async function refreshSwappinessUI() {
+            try {
+                const result = await exec('cat /proc/sys/vm/swappiness');
+                if (result.errno === 0) {
+                    const val = result.stdout.trim();
+                    currentSwappinessDisplay.textContent = val;
+                    slider.value = val;
+                    sliderValueDisplay.textContent = val;
+                    return true;
+                } else {
+                    currentSwappinessDisplay.textContent = '?';
+                    return false;
+                }
+            } catch {
+                currentSwappinessDisplay.textContent = 'ERR';
+                return false;
+            }
+        }
+
+        // 仅刷新 zram UI，不自动更新描述
+        async function refreshZramUI() {
+            try {
+                const result = await exec('cat /sys/block/zram0/disksize 2>/dev/null || echo 0');
+                if (result.errno === 0) {
+                    const bytes = parseInt(result.stdout.trim());
+                    if (bytes > 0) {
+                        const gb = bytesToGB(bytes);
+                        currentZramDisplay.textContent = gb + ' GB';
+                        let currentGbInt = Math.round(bytes / 1073741824);
+                        if (currentGbInt < 1) currentGbInt = 1;
+                        if (currentGbInt > 16) currentGbInt = 16;
+                        zramSlider.value = currentGbInt;
+                        zramSliderValueDisplay.textContent = currentGbInt + ' GB';
+                        return true;
+                    } else {
+                        currentZramDisplay.textContent = '未启用';
+                        zramSliderValueDisplay.textContent = zramSlider.value + ' GB';
+                        return true;
+                    }
+                } else {
+                    currentZramDisplay.textContent = '?';
+                    return false;
+                }
+            } catch {
+                currentZramDisplay.textContent = 'ERR';
+                return false;
+            }
+        }
+
+        // 滑块事件
+        slider.addEventListener('input', () => {
+            sliderValueDisplay.textContent = slider.value;
+        });
+        zramSlider.addEventListener('input', () => {
+            zramSliderValueDisplay.textContent = zramSlider.value + ' GB';
+        });
+
+        // 刷新按钮
+        refreshSwappinessBtn.addEventListener('click', async () => {
+            await refreshSwappinessUI();
+            // 刷新按钮同时更新描述
+            await exec(`sh /data/adb/modules/${moduleId}/update_desc.sh`);
+            showMessage('已刷新 swappiness 值');
+        });
+        refreshZramBtn.addEventListener('click', async () => {
+            await refreshZramUI();
+            // 刷新按钮同时更新描述
+            await exec(`sh /data/adb/modules/${moduleId}/update_desc.sh`);
+            showMessage('已刷新 zram 大小');
+        });
+
+        // Swappiness 临时生效
+        applyTempBtn.addEventListener('click', async () => {
+            const val = slider.value;
+            try {
+                const result = await exec(`sysctl -w vm.swappiness=${val}`);
+                if (result.errno !== 0) {
+                    showMessage(`❌ 设置失败: ${result.stderr}`, false);
+                    return;
+                }
+                await refreshSwappinessUI();
+                await exec(`sh /data/adb/modules/${moduleId}/update_desc.sh`);
+                showMessage(`✅ 已临时设置为 ${val}`);
+            } catch {
+                showMessage(`❌ 执行出错`, false);
+            }
+        });
+
+        // zRam 临时调整
+        applyZramTempBtn.addEventListener('click', async () => {
+            const gb = parseInt(zramSlider.value);
+            const bytes = gbToBytes(gb);
+            try {
+                const result = await exec(`sh /data/adb/modules/${moduleId}/zram_resize.sh ${bytes}`);
+                if (result.errno === 0) {
+                    await refreshZramUI();
+                    await exec(`sh /data/adb/modules/${moduleId}/update_desc.sh`);
+                    showMessage(`✅ 已临时调整为 ${gb}GB`);
+                } else {
+                    showMessage(`❌ 调整失败: ${result.stderr}`, false);
+                }
+            } catch {
+                showMessage(`❌ 执行出错`, false);
+            }
+        });
+
+        // 页面加载：先刷新 UI，再统一更新描述
+        (async () => {
+            await refreshSwappinessUI();
+            await refreshZramUI();
+            // 最后调用一次 update_desc 刷新卡片
+            await exec(`sh /data/adb/modules/${moduleId}/update_desc.sh`);
+        })();
+
+    </script>
+</body>
+</html>
