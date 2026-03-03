@@ -2,6 +2,6 @@ id=swappiness_webui
 name=zRam调度模块
 version=v3.0
 versionCode=3
-author=zRam调度模块
+author=宝子
 description=通过控制Swappiness权重调整内存压缩算法的激进程度
 updateJson=https://raw.githubusercontent.com/bao-ku/swappiness_webui/main/update.json
