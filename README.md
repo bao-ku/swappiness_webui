@@ -1,7 +1,8 @@
-# zRam 调度模块 (Swappiness Tuner)
+# zRam 调度模块
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![GitHub release](https://img.shields.io/github/v/release/bao-ku/swappiness_webui)](https://github.com/bao-ku/swappiness_webui/releases)
 [![KernelSU](https://img.shields.io/badge/KernelSU-Support-green)](https://kernelsu.org/)
+
 一个强大的内核参数 swappiness 调节器，提供直观的 WebUI 界面，让您能精细地控制内存回收策略，优化 zRAM 使用效率，平衡后台保活与前台应用性能。
 
 
@@ -33,8 +34,8 @@
 
 推荐工作流
 
-1. Fork 并自编译内核：
-   · 访问 Numbersf/Action-Build 项目 (KernelSU 分支)，按照说明 Fork 仓库并配置 GitHub Actions。
+1. **Fork 并自编译内核**：
+    *   访问 [**Numbersf/Action-Build 项目 (KernelSU 分支)**](https://github.com/Numbersf/Action-Build/tree/KernelSU)，按照说明 Fork 仓库并配置 GitHub Actions。
    · 在构建工作流中，您可以灵活地配置 zRAM 参数，例如：
      · ZRAM=1 (启用 zRAM)
      · ZRAM_ALGORITHM=lz4 或 lz4kd (推荐使用 lz4 系列快速算法)
