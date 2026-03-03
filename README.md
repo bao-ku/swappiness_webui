@@ -1,9 +1,7 @@
 # zRam 调度模块 (Swappiness Tuner)
-
-https://img.shields.io/badge/License-GPLv3-blue.svg
-https://img.shields.io/github/v/release/bao-ku/swappiness_webui
-https://img.shields.io/badge/KernelSU-Support-green
-
+[![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![GitHub release](https://img.shields.io/github/v/release/bao-ku/swappiness_webui)](https://github.com/bao-ku/swappiness_webui/releases)
+[![KernelSU](https://img.shields.io/badge/KernelSU-Support-green)](https://kernelsu.org/)
 一个强大的内核参数 swappiness 调节器，提供直观的 WebUI 界面，让您能精细地控制内存回收策略，优化 zRAM 使用效率，平衡后台保活与前台应用性能。
 
 
