@@ -5,6 +5,7 @@
 
 一个强大的内核参数 swappiness 调节器，提供直观的 WebUI 界面，让您能精细地控制内存回收策略，优化 zRAM 使用效率，平衡后台保活与前台应用性能。
 
+![WebUI 预览](https://github.com/bao-ku/swappiness_webui/blob/main/assets/preview.png.png?raw=true)
 
 ✨ 功能特点
 
